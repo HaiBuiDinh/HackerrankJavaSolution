@@ -1,3 +1,5 @@
+package UtopianTree;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -13,21 +15,23 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'viralAdvertising' function below.
+     * Complete the 'utopianTree' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts INTEGER n as parameter.
      */
 
-    public static int viralAdvertising(int n) {
+    public static int utopianTree(int n) {
         // Write your code here
-        int person = 5;
-        int result = 0;
+        int hight = 1;
         for (int i = 0; i < n; i++) {
-            result += person/2;
-            person = (person / 2) * 3;
+            if (i%2 == 0) {
+                hight *= 2;
+            } else {
+                hight++;
+            }
         }
-        return result;
+        return hight;
     }
 
 }
@@ -37,15 +41,22 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
 
-        int result = Result.viralAdvertising(n);
+        IntStream.range(0, t).forEach(tItr -> {
+            try {
+                int n = Integer.parseInt(bufferedReader.readLine().trim());
 
-        bufferedWriter.write(String.valueOf(result));
-        bufferedWriter.newLine();
+                int result = Result.utopianTree(n);
+
+                bufferedWriter.write(String.valueOf(result));
+                bufferedWriter.newLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         bufferedReader.close();
         bufferedWriter.close();
     }
 }
-

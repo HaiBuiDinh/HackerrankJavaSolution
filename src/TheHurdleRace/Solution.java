@@ -1,3 +1,5 @@
+package TheHurdleRace;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -13,21 +15,18 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'viralAdvertising' function below.
+     * Complete the 'hurdleRace' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts INTEGER n as parameter.
+     * The function accepts following parameters:
+     *  1. INTEGER k
+     *  2. INTEGER_ARRAY height
      */
 
-    public static int viralAdvertising(int n) {
+    public static int hurdleRace(int k, List<Integer> height) {
         // Write your code here
-        int person = 5;
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            result += person/2;
-            person = (person / 2) * 3;
-        }
-        return result;
+        int max = height.stream().max(Comparator.comparing(Integer::valueOf)).get();
+        return Math.max(max - k, 0);
     }
 
 }
@@ -37,9 +36,17 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
 
-        int result = Result.viralAdvertising(n);
+        int n = Integer.parseInt(firstMultipleInput[0]);
+
+        int k = Integer.parseInt(firstMultipleInput[1]);
+
+        List<Integer> height = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                .map(Integer::parseInt)
+                .collect(toList());
+
+        int result = Result.hurdleRace(k, height);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
@@ -48,4 +55,3 @@ public class Solution {
         bufferedWriter.close();
     }
 }
-

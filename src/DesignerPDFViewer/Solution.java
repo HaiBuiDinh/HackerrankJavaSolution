@@ -1,3 +1,5 @@
+package DesignerPDFViewer;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -13,21 +15,23 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'viralAdvertising' function below.
+     * Complete the 'designerPdfViewer' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts INTEGER n as parameter.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY h
+     *  2. STRING word
      */
 
-    public static int viralAdvertising(int n) {
+    public static int designerPdfViewer(List<Integer> h, String word) {
         // Write your code here
-        int person = 5;
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            result += person/2;
-            person = (person / 2) * 3;
+        int length = word.length();
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < length; i++) {
+            if (max < h.get(word.charAt(i) - 'a')) max = h.get(word.charAt(i) - 'a');
         }
-        return result;
+
+        return max*length;
     }
 
 }
@@ -37,9 +41,13 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
+        List<Integer> h = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                .map(Integer::parseInt)
+                .collect(toList());
 
-        int result = Result.viralAdvertising(n);
+        String word = bufferedReader.readLine();
+
+        int result = Result.designerPdfViewer(h, word);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
@@ -48,4 +56,3 @@ public class Solution {
         bufferedWriter.close();
     }
 }
-

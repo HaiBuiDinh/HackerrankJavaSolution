@@ -1,3 +1,5 @@
+package BeautifulDaysAtTheMovies;
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -13,20 +15,29 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'viralAdvertising' function below.
+     * Complete the 'beautifulDays' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts INTEGER n as parameter.
+     * The function accepts following parameters:
+     *  1. INTEGER i
+     *  2. INTEGER j
+     *  3. INTEGER k
      */
 
-    public static int viralAdvertising(int n) {
+    public static int beautifulDays(int i, int j, int k) {
         // Write your code here
-        int person = 5;
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            result += person/2;
-            person = (person / 2) * 3;
+        int temp, count, result;
+        result = 0;
+        for (int l = i; l <= j ; l++) {
+            temp = l;
+            count = 0;
+            while (temp > 0) {
+                count = count*10 + (temp % 10);
+                temp = temp/10;
+            }
+            if (Math.abs(count - l) % k == 0) result++;
         }
+
         return result;
     }
 
@@ -37,9 +48,15 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
 
-        int result = Result.viralAdvertising(n);
+        int i = Integer.parseInt(firstMultipleInput[0]);
+
+        int j = Integer.parseInt(firstMultipleInput[1]);
+
+        int k = Integer.parseInt(firstMultipleInput[2]);
+
+        int result = Result.beautifulDays(i, j, k);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
@@ -48,4 +65,3 @@ public class Solution {
         bufferedWriter.close();
     }
 }
-
